@@ -6,7 +6,7 @@
   "scripts": {
     "test": "cd ./apps/api && npm run test",
     "prepare": "husky",
-    "lint": "cd ./apps/api && npm run lint && cd ../thread && npm run lint && cd ../sender && npm run lint",
+    "lint": "eslint apps/**/*.{ts,tsx} --fix",
     "format": "cd ./apps/api && npm run format"
   },
   "repository": {
@@ -31,6 +31,7 @@
     "eslint-plugin-prettier": "^5.4.0",
     "husky": "^9.1.7",
     "prettier": "^3.5.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.1"
   }
 }
