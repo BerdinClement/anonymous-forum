@@ -26,6 +26,19 @@ services:
     networks:
       - internal
 
+  thread:
+    build: ./apps/thread
+    container_name: forum-thread
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    env_file:
+      - ./apps/thread/.env
+    networks:
+      - internal
+
+
 volumes:
   db_data:
 
