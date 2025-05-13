@@ -40,6 +40,19 @@ export default function Home() {
               <div className="text-xs text-gray-400 mt-2">
                 {new Date(msg.createdAt).toLocaleString()}
               </div>
+              <button
+                onClick={async () => {
+                  try {
+                    await messageService.deleteMessage(msg.id);
+                    setMessages(messages.filter((m) => m.id !== msg.id));
+                  } catch {
+                    setError('Failed to delete message');
+                  }
+                }}
+                className="text-sm text-red-500 hover:text-red-700 ml-2"
+              >
+                Delete
+              </button>
             </div>
           ))}
         </div>
