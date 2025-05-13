@@ -1,0 +1,21 @@
+{
+  "name": "anonymous-forum",
+  "version": "1.0.0",
+  "description": "A simple anonymous forum where users can post and read messages using a unique pseudonym without any authentication.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BerdinClement/anonymous-forum.git"
+  },
+  "keywords": [],
+  "author": "Clément Berdin",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/BerdinClement/anonymous-forum/issues"
+  },
+  "homepage": "https://github.com/BerdinClement/anonymous-forum#readme"
+}
