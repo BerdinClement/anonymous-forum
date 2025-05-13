@@ -38,6 +38,17 @@ services:
     networks:
       - internal
 
+  sender:
+    build: ./apps/sender
+    container_name: forum-sender
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
+    env_file:
+      - ./apps/sender/.env
+    networks:
+      - internal
 
 volumes:
   db_data:
