@@ -18,7 +18,9 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install eslint --save-dev # Ensure ESLint is installed
 
       - name: Lint
         run: npm run lint
