@@ -1,0 +1,63 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
+
+  docker:
+    needs: setup
+    runs-on: ubuntu-latest
+    env:
+      REGISTRY: ghcr.io
+      IMAGE_PREFIX: ghcr.io/${{ github.repository }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Extract short commit hash
+        id: vars
+        run: echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & Push API
+        run: |
+          docker build -t $IMAGE_PREFIX-api:${{ steps.vars.outputs.short_sha }} ./apps/api
+          docker push $IMAGE_PREFIX-api:${{ steps.vars.outputs.short_sha }}
+
+      - name: Build & Push Thread
+        run: |
+          docker build -t $IMAGE_PREFIX-thread:${{ steps.vars.outputs.short_sha }} ./apps/thread
+          docker push $IMAGE_PREFIX-thread:${{ steps.vars.outputs.short_sha }}
+
+      - name: Build & Push Sender
+        run: |
+          docker build -t $IMAGE_PREFIX-sender:${{ steps.vars.outputs.short_sha }} ./apps/sender
+          docker push $IMAGE_PREFIX-sender:${{ steps.vars.outputs.short_sha }}
