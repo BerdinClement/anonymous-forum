@@ -1,26 +1,31 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateMessageDto } from './dto/create-message.dto';
-import { UpdateMessageDto } from './dto/update-message.dto';
+import {Message} from "./entities/message.entity";
 
 @Injectable()
 export class MessagesService {
-  create(createMessageDto: CreateMessageDto) {
-    return 'This action adds a new message';
+  constructor(
+    @InjectRepository(Message)
+    private readonly messageRepository: Repository<Message>,
+  ) {}
+
+  async create(createMessageDto: CreateMessageDto): Promise<Message> {
+    const message = this.messageRepository.create(createMessageDto);
+    return this.messageRepository.save(message);
   }
 
-  findAll() {
-    return `This action returns all messages`;
+  async findAll(): Promise<Message[]> {
+    return this.messageRepository.find({
+      order: { createdAt: 'DESC' },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} message`;
-  }
-
-  update(id: number, updateMessageDto: UpdateMessageDto) {
-    return `This action updates a #${id} message`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} message`;
+  async remove(id: number): Promise<void> {
+    const result = await this.messageRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Message with ID ${id} not found`);
+    }
   }
 }
