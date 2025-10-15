@@ -1,7 +1,8 @@
+import { config } from "@/config";
 import { Message } from "@/types/Message";
 
 class MessageService {
-  private baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+  private baseUrl = config.apiUrl ;
 
   async createMessage(author: string, content: string): Promise<Message> {
 	const res = await fetch(`${this.baseUrl}/messages`, {

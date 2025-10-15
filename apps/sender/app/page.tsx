@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Message } from '@/types/Message';
 import messageService from "@/lib/message/MessageService";
 import Link from "next/link";
+import { config } from "@/config";
 
 export default function Home() {
   const [author, setAuthor] = useState('');
@@ -33,7 +34,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-xl border border-gray-200">
-        <Link href="http://localhost:80" className={"text-blue-600"}>View all message</Link>
+        <Link href={config.threadAppUrl} className={"text-blue-600"}>View all message</Link>
         <h1 className="text-2xl font-semibold mb-6 text-center">Send an Anonymous Message</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">

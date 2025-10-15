@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import messageService from "@/lib/message/MessageService";
 import { Message } from "@/types/Message";
 import Link from "next/link";
+import { config } from "@/config";
 
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -26,7 +27,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-3xl mx-auto">
-        <Link href="http://localhost:8080" className={"text-blue-600"}>Send a message</Link>
+        <Link href={config.senderAppUrl} className={"text-blue-600"}>Send a message</Link>
         <h1 className="text-2xl font-semibold mb-4">Anonymous Messages</h1>
         {error && (
           <p className="text-red-500 mb-4">{error}</p>
