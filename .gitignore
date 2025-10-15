@@ -1,7 +1,14 @@
 # Node.js
 node_modules/
 dist/
-.env
+
+# Environment variables
+*.env
+!*.env.example
+.env.local
+.env.*.local
+# Gardez les fichiers Docker d'environnement
+!*.env.docker
 
 # OS
 .DS_Store

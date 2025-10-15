@@ -22,7 +22,7 @@ services:
     depends_on:
       - db
     env_file:
-      - ./apps/api/.env
+      - ./apps/api/.env.docker
     networks:
       - internal
 
@@ -34,7 +34,7 @@ services:
     depends_on:
       - api
     env_file:
-      - ./apps/thread/.env
+      - ./apps/thread/.env.docker
     networks:
       - internal
 
@@ -46,7 +46,7 @@ services:
     depends_on:
       - api
     env_file:
-      - ./apps/sender/.env
+      - ./apps/sender/.env.docker
     networks:
       - internal
 
